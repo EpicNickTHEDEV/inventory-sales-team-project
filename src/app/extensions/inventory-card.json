@@ -1,12 +1,16 @@
 {
   "type": "crm-card",
   "data": {
-    "title": "Example Card",
+    "title": "Inventário",
     "uid": "get_started_card",
     "location": "crm.record.tab",
     "module": {
-      "file": "Example.jsx"
+      "file": "main.jsx"
     },
-    "objectTypes": [{ "name": "contacts" }]
+    "objectTypes": [
+      {
+        "name": "contacts"
+      }
+    ]
   }
 }

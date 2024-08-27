@@ -33,17 +33,14 @@ const Extension = ({ context, runServerless, sendAlert }) => {
     <>
       <Text>
         <Text format={{ fontWeight: "bold" }}>
-          Your first UI extension is ready!
+          This is the inventory engine front-end made by Epic Digital.
         </Text>
-        Congratulations, {context.user.firstName}! You just deployed your first
-        HubSpot UI extension. This example demonstrates how you would send
-        parameters from your React frontend to the serverless function and get a
-        response back.
+        Hi, {context.user.firstName}, this is under development and will be available soon to the iFood Sales Team, please wait a little longer :)
       </Text>
       <Flex direction="row" align="end" gap="small">
         <Input name="text" label="Send" onInput={(t) => setText(t)} />
         <Button type="submit" onClick={handleClick}>
-          Click me
+          Debug me
         </Button>
       </Flex>
       <Divider />

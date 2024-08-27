@@ -1,7 +1,7 @@
 {
-  "name": "hubspot-get-started-project",
-  "version": "0.1.0",
-  "description": "Basic example of a UI Extension built with HubSpot's React developer tools",
+  "name": "hubspot-graphql-invenory-project-front-end",
+  "version": "1.0.0",
+  "description": "Inventory GraphQL Front-end",
   "scripts": {
     "postinstall": "cd ./src/app/extensions/ && npm install && cd ../app.functions && npm install",
     "build": "npm run build --prefix ./src/app/extensions/"
