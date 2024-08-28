@@ -1,6 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { logger, Button, Text, Flex, Tag, Heading, Link, LoadingSpinner, Table, TableHead, TableRow, TableHeader, TableBody, TableCell, hubspot } from "@hubspot/ui-extensions";
 
+import axios from "axios";
+
+const AVAILABILITY_ITEMS_QUERY = `
+  query {
+    availabilityItems {
+      _id
+      product {
+        name
+      }
+      location {
+        name
+      }
+      vertical {
+        name
+      }
+      quantity
+      startDate
+      endDate
+    }
+  }
+`;
+
 hubspot.extend(({ context, runServerlessFunction, actions }) => 
   <Extension 
     context={context} 
@@ -13,27 +35,37 @@ const Extension = ({ context, runServerless, actions }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       // Call the serverless function
-  //       const result = await runServerless({ parameters: { hs_object_id: context.crmObjectId } });
-        
-  //       if (result.status === "SUCCESS") {
-  //         setData(result.response);
-  //       } else {
-  //         throw new Error("Failed to fetch data from serverless function");
-  //       }
-  //     } catch (e) {
-  //       logger.error("Error in fetchData:", e);
-  //       setError(e.message || "An unexpected error occurred");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(
+          "https://ifood-availability-backend-production-ifood.svc-us3.zcloud.ws/graphql",
+          JSON.stringify({
+            query: AVAILABILITY_ITEMS_QUERY,
+            variables: {},
+          }),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
-  //   fetchData();
-  // }, [runServerless, context.crmObjectId]);
+        if (response.data && response.data.data) {
+          setData(response.data.data);
+        } else {
+          throw new Error("No data returned from API");
+        }
+      } catch (e) {
+        logger.error("Error in fetchData:", e);
+        setError(e.message || "An unexpected error occurred");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   if (loading) return <LoadingSpinner label="Carregando..." />;
   if (error) {
