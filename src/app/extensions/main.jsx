@@ -56,16 +56,7 @@ const Extension = ({ context, runServerless, sendAlert }) => {
             <TableCell>{ fallbackTipo }</TableCell>
             <TableCell>{ fallbackDescricao }</TableCell>
           </TableRow>
-          {data.map((item, index) => (
-            <TableRow key={index}>
-              <TableCell>{item.location.name}</TableCell>
-              <TableCell>{item.vertical.name}</TableCell>
-              <TableCell>{item.product.name}</TableCell>
-              <TableCell>{item.quantity}</TableCell>
-              <TableCell>{item.startDate}</TableCell>
-              <TableCell>{item.endDate}</TableCell>
-            </TableRow>
-          ))}
+
       </TableBody>
     </Table>
     </>
