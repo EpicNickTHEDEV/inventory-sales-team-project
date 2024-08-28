@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button, Text, Flex, Tag, hubspot, LoadingSpinner, Table, TableHead, TableRow, TableHeader, TableBody, TableCell, Heading, Link, Modal, ModalBody } from "@hubspot/ui-extensions";
-import axios from 'axios';
 
 // Define the extension to be run within the Hubspot CRM
 hubspot.extend(({ context, runServerlessFunction, actions }) => (
@@ -19,42 +18,6 @@ const Extension = ({ context, runServerless, sendAlert }) => {
   const fallbackProduto = 'Banner';
   const fallbackTipo = 'Regular';
   const fallbackDescricao = 'Lorem ipsum dolor conecster amett adhet';
-
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.post('http://localhost:3000/graphql', {
-          query: `
-            query {
-              availabilityItems {
-                _id
-                product {
-                  name
-                }
-                location {
-                  name
-                }
-                vertical {
-                  name
-                }
-                quantity
-                startDate
-                endDate
-              }
-            }
-          `
-        });
-        setData(response.data.data.availabilityItems);
-      } catch (error) {
-        sendAlert("error", "Failed to fetch data from GraphQL API");
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [sendAlert]);
 
   return (
     <>
