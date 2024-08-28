@@ -58,24 +58,24 @@ const Extension = ({ context, runServerless, actions }) => {
     <Table bordered={true} paginated={false} pageCount="1">
       <TableHead>
         <TableRow>
-          <TableHeader>LOCAL</TableHeader>
-          <TableHeader>VERTICAL</TableHeader>
-          <TableHeader>PRODUTO</TableHeader>
-          <TableHeader>TIPO</TableHeader>
-          <TableHeader>DESCRIÇÃO</TableHeader>
-          <TableHeader>AÇÃO</TableHeader>
+          <TableHeader width={'min'}>LOCAL</TableHeader>
+          <TableHeader width={'min'}>VERTICAL</TableHeader>
+          <TableHeader width={'min'}>PRODUTO</TableHeader>
+          <TableHeader width={'min'}>TIPO</TableHeader>
+          <TableHeader width={'min'}>DESCRIÇÃO</TableHeader>
+          <TableHeader width={'min'}>AÇÃO</TableHeader>
         </TableRow>
       </TableHead>
       <TableBody>
         {availabilityItems.length > 0 ? (
           availabilityItems.map((item, index) => (
             <TableRow key={index}>
-              <TableCell>{item.location?.name || "Home"}</TableCell>
-              <TableCell>{item.vertical?.name || "Mercado"}</TableCell>
-              <TableCell>{item.product?.name || "Banner"}</TableCell>
-              <TableCell>{item.type || "Regular"}</TableCell>
-              <TableCell>{item.description || "Lorem ipsum dolor conecster amett adhet"}</TableCell>
-              <TableCell><Button
+              <TableCell width={'min'}>{item.location?.name || "Home"}</TableCell>
+              <TableCell width={'min'}>{item.vertical?.name || "Mercado"}</TableCell>
+              <TableCell width={'min'}>{item.product?.name || "Banner"}</TableCell>
+              <TableCell width={'min'}>{item.type || "Regular"}</TableCell>
+              <TableCell width={'min'}>{item.description || "Lorem ipsum dolor conecster amett adhet"}</TableCell>
+              <TableCell width={'min'}><Button
    onClick={() => {
     console.log('Consultar!');
     }}
