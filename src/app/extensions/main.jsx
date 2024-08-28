@@ -72,9 +72,8 @@ const Extension = ({ context, runServerless, actions }) => {
               <TableCell>{item.location?.name || "Home"}</TableCell>
               <TableCell>{item.vertical?.name || "Mercado"}</TableCell>
               <TableCell>{item.product?.name || "Banner"}</TableCell>
-              <TableCell>{item.quantity || "Regular"}</TableCell>
-              <TableCell>{new Date(parseInt(item.startDate)).toLocaleDateString() || "N/A"}</TableCell>
-              <TableCell>{new Date(parseInt(item.endDate)).toLocaleDateString() || "N/A"}</TableCell>
+              <TableCell>{item.type || "Regular"}</TableCell>
+              <TableCell>{item.description || "Lorem ipsum dolor conecster amett adhet"}</TableCell>
               <TableCell><Button
    onClick={() => {
     console.log('Consultar!');
