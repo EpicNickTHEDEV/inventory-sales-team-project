@@ -22,7 +22,7 @@ const Extension = ({ context, runServerless, sendAlert }) => {
     };
 
     fetchData();
-  }, [runServerless]);
+  });
 
   // Rendering fallback data if the fetch fails
   const fallbackRow = (
