@@ -55,7 +55,7 @@ const Extension = ({ context, runServerless, actions }) => {
   );
 
   return (
-    <Table bordered={true} paginated={true} pageCount="5">
+    <Table bordered={true} paginated={false} pageCount="1">
       <TableHead>
         <TableRow>
           <TableHeader>LOCAL</TableHeader>
@@ -80,10 +80,10 @@ const Extension = ({ context, runServerless, actions }) => {
     }}
    href={{
     url: '#',
-    external: true
+    external: false
     }}
    variant="primary"
-   size="md"
+   size="sm"
    type="button"
    >
    Consultar
