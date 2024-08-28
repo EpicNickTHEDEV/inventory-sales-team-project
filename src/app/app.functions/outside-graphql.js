@@ -4,6 +4,7 @@ exports.main = async (context = {}) => {
   try {
     // Fetch associated availability items
     const { data } = await fetchAvailabilityItems();
+    console.log(`data: ${data}`);
 
     // Send the response data
     return data;
