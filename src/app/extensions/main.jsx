@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { logger, Button, Text, Flex, Tag, Heading, Link, LoadingSpinner, Table, TableHead, TableRow, TableHeader, TableBody, TableCell, hubspot } from "@hubspot/ui-extensions";
 
-
 hubspot.extend(({ context, runServerlessFunction, actions }) => 
   <Extension 
     context={context} 
@@ -19,10 +18,10 @@ const Extension = ({ context, runServerless, actions }) => {
       try {
         const result = await runServerless({
           name: "fetchAvailabilityItems",
-          parameters: { hs_object_id: context.crmObjectId }
         });
 
-        if (result.status === "SUCCESS") {
+        if (result.status === "SUCCESS" && result.response) {
+          logger.info("Data fetched successfully:", result.response);
           setData(result.response);
         } else {
           throw new Error("Failed to fetch data from serverless function");
@@ -36,13 +35,14 @@ const Extension = ({ context, runServerless, actions }) => {
     };
 
     fetchData();
-  }, [runServerless, context.crmObjectId]);
-
+  }, [runServerless]);
 
   if (loading) return <LoadingSpinner label="Carregando..." />;
   if (error) {
     return <p>Error: {error}</p>;
   }
+
+  const availabilityItems = data?.availabilityItems || [];
 
   const fallbackRow = (
     <TableRow>
@@ -66,8 +66,8 @@ const Extension = ({ context, runServerless, actions }) => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {data && data.availabilityItems.length > 0 ? (
-          data.availabilityItems.map((item, index) => (
+        {availabilityItems.length > 0 ? (
+          availabilityItems.map((item, index) => (
             <TableRow key={index}>
               <TableCell>{item.location?.name || "Home"}</TableCell>
               <TableCell>{item.vertical?.name || "Mercado"}</TableCell>
