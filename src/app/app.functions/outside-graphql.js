@@ -51,7 +51,10 @@ const fetchAvailabilityItems = () => {
       },
     }
   );
-  console.log(`final body all: ${JSON.stringify(dataPost)}`);
+
+  if (dataPost.status === "SUCCESS" && dataPost.response) {
+    console.log(`dataPost final body all: ${dataPost.response}`);
+  }
 
   return dataPost;
 };
