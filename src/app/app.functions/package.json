@@ -6,6 +6,7 @@
   "license": "MIT",
   "dependencies": {
     "@hubspot/api-client": "^7.0.1",
-    "axios": "^0.27.2"
+    "axios": "^0.27.2",
+    "@apollo/client": "^3.11.4"
   }
 }
