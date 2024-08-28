@@ -21,8 +21,8 @@ const Extension = ({ context, runServerless, actions }) => {
         });
 
         if (result.status === "SUCCESS" && result.response) {
-          logger.info("Data fetched successfully:", result.response);
-          setData(result.response);
+          logger.info("Data fetched successfully:", result.response.data);
+          setData(result.response.data);
         } else {
           throw new Error("Failed to fetch data from serverless function");
         }
@@ -73,8 +73,8 @@ const Extension = ({ context, runServerless, actions }) => {
               <TableCell>{item.vertical?.name || "Mercado"}</TableCell>
               <TableCell>{item.product?.name || "Banner"}</TableCell>
               <TableCell>{item.quantity || "Regular"}</TableCell>
-              <TableCell>{item.startDate || "N/A"}</TableCell>
-              <TableCell>{item.endDate || "N/A"}</TableCell>
+              <TableCell>{new Date(parseInt(item.startDate)).toLocaleDateString() || "N/A"}</TableCell>
+              <TableCell>{new Date(parseInt(item.endDate)).toLocaleDateString() || "N/A"}</TableCell>
             </TableRow>
           ))
         ) : (
