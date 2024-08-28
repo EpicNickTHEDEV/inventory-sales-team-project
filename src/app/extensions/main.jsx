@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, TableHead, TableRow, TableHeader, TableBody, TableCell, hubspot } from "@hubspot/ui-extensions";
+import { logger, Table, TableHead, TableRow, TableHeader, TableBody, TableCell, hubspot } from "@hubspot/ui-extensions";
 
 // Define the extension to be run within the HubSpot CRM
 hubspot.extend(({ context, runServerlessFunction, actions }) => (
@@ -13,7 +13,7 @@ hubspot.extend(({ context, runServerlessFunction, actions }) => (
 const Extension = ({ context, runServerless, sendAlert }) => {
   const [data, setData] = useState(null);
   const result = runServerless
-  console.log(`result: ${result}`)
+  logger.info(`result: ${JSON.parse(result.body)}`)
 
   // useEffect following HubSpot's recommended pattern
   // useEffect(() => {
