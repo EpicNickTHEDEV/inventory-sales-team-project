@@ -13,18 +13,21 @@ hubspot.extend(({ context, runServerlessFunction, actions }) => (
 const Extension = ({ context, runServerless, sendAlert }) => {
   const [data, setData] = useState(null);
   const result = runServerless
-  logger.info(`result: ${JSON.parse(result.body)}`)
+  // logger.info(`result: ${JSON.parse(result.body)}`)
 
-  // useEffect following HubSpot's recommended pattern
-  // useEffect(() => {
-  //   const fetchData = () => {
-  //       const result = runServerless({ parameters: {} });
-  //       const availabilityItems = JSON.parse(result.body);
-  //       setData(availabilityItems);
-  //   };
+  useEffect(() => {
+    const fetchData = () => {
+      const result = runServerless({ parameters: {} });
+      const availabilityItems = JSON.parse(result.body);
+      if (availabilityItems != undefined) {
+        setData(availabilityItems)
+      } else {
+        setData(null)
+      }
+    };
 
-  //   fetchData();
-  // });
+    fetchData();
+  });
 
   // Rendering fallback data if the fetch fails
   const fallbackRow = (
@@ -49,7 +52,18 @@ const Extension = ({ context, runServerless, sendAlert }) => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {(
+      {data && Array.isArray(data) && data.length > 0 ? (
+          data.map((item, index) => (
+            <TableRow key={index}>
+              <TableCell>{item.location?.name || "Home"}</TableCell>
+              <TableCell>{item.vertical?.name || "Mercado"}</TableCell>
+              <TableCell>{item.product?.name || "Banner"}</TableCell>
+              <TableCell>{item.quantity || "Regular"}</TableCell>
+              <TableCell>{item.startDate || "N/A"}</TableCell>
+              <TableCell>{item.endDate || "N/A"}</TableCell>
+            </TableRow>
+          ))
+        ) : (
           fallbackRow
         )}
       </TableBody>
