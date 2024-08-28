@@ -12,7 +12,6 @@ hubspot.extend(({ context, runServerlessFunction, actions }) => (
 
 const Extension = ({ context, runServerless, sendAlert }) => {
   const [data, setData] = useState(null);
-  // const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   // logger.info("Initiating extension!");
 
