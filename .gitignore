@@ -104,3 +104,5 @@ dist
 
 hubspot.config.yml
 .history/
+.DS_Store
+.DS_*
