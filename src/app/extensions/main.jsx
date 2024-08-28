@@ -12,6 +12,8 @@ hubspot.extend(({ context, runServerlessFunction, actions }) => (
 
 const Extension = ({ context, runServerless, sendAlert }) => {
   const [data, setData] = useState(null);
+  const result = runServerless
+  console.log(`result: ${result}`)
 
   // useEffect following HubSpot's recommended pattern
   // useEffect(() => {
