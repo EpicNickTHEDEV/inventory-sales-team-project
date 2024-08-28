@@ -4,8 +4,6 @@ exports.main = async (context = {}) => {
   try {
     // Fetch associated availability items
     const { data } = await fetchAvailabilityItems();
-    console.log(`data string: ${data.response.toString()}`);
-    console.log(`data all: ${JSON.stringify(data.toString())}`);
 
     // Send the response data
     return data;
@@ -42,6 +40,8 @@ const fetchAvailabilityItems = () => {
     query: query,
     variables: {},
   };
+
+  console.log(`body all: ${JSON.stringify(body)}`);
 
   // Return the axios post
   return axios.post(
