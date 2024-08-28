@@ -1,6 +1,6 @@
 import React from "react";
 import { ApolloClient, InMemoryCache, ApolloProvider, useQuery } from "@apollo/client";
-import { logger, Table, TableHead, TableRow, TableHeader, TableBody, TableCell, hubspot } from "@hubspot/ui-extensions";
+import { logger, LoadingSpinner, Table, TableHead, TableRow, TableHeader, TableBody, TableCell, hubspot } from "@hubspot/ui-extensions";
 import { AVAILABILITY_ITEMS_QUERY } from "../app.functions/outside-graphql";
 
 const client = new ApolloClient({ 
@@ -22,10 +22,10 @@ hubspot.extend(({ context, runServerlessFunction, actions }) => (
 const Extension = ({ context, runServerless, sendAlert }) => {
   const { loading, error, data } = useQuery(AVAILABILITY_ITEMS_QUERY);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <LoadingSpinner label="Carregando..." />;
   if (error) {
     logger.error("Error in fetchData:", error);
-    sendAlert("error", error.message || "An unexpected error occurred");
+    logger.error("error", error.message || "An unexpected error occurred");
     return <p>Error: {error.message}</p>;
   }
 
