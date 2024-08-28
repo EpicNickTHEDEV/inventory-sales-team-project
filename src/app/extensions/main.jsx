@@ -95,5 +95,3 @@ const Extension = ({ context, runServerless, sendAlert }) => {
     </>
   );
 };
-
-export default Extension;
