@@ -13,27 +13,27 @@ const Extension = ({ context, runServerless, actions }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Call the serverless function
-        const result = await runServerless({ parameters: { hs_object_id: context.crmObjectId } });
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       // Call the serverless function
+  //       const result = await runServerless({ parameters: { hs_object_id: context.crmObjectId } });
         
-        if (result.status === "SUCCESS") {
-          setData(result.response);
-        } else {
-          throw new Error("Failed to fetch data from serverless function");
-        }
-      } catch (e) {
-        logger.error("Error in fetchData:", e);
-        setError(e.message || "An unexpected error occurred");
-      } finally {
-        setLoading(false);
-      }
-    };
+  //       if (result.status === "SUCCESS") {
+  //         setData(result.response);
+  //       } else {
+  //         throw new Error("Failed to fetch data from serverless function");
+  //       }
+  //     } catch (e) {
+  //       logger.error("Error in fetchData:", e);
+  //       setError(e.message || "An unexpected error occurred");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchData();
-  }, [runServerless, context.crmObjectId]);
+  //   fetchData();
+  // }, [runServerless, context.crmObjectId]);
 
   if (loading) return <LoadingSpinner label="Carregando..." />;
   if (error) {
