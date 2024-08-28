@@ -15,8 +15,9 @@ hubspot.extend(({ context, runServerlessFunction, actions }) => (
 const Extension = ({ context, runServerless, sendAlert }) => {
   const [text, setText] = useState("");
   const fallbackLocal = 'Home';
-  const fallbackVertical = 'Banner';
-  const fallbackProduto = 'Regular';
+  const fallbackVertical = 'Mercado';
+  const fallbackProduto = 'Banner';
+  const fallbackTipo = 'Regular';
   const fallbackDescricao = 'Lorem ipsum dolor conecster amett adhet';
 
   return (
@@ -38,8 +39,9 @@ const Extension = ({ context, runServerless, sendAlert }) => {
       <TableBody>
         <TableRow>
             <TableCell>{ fallbackLocal }</TableCell>
-            <TableCell>{ fallbackVertical }</TableCell>
-            <TableCell>{ fallbackProduto }</TableCell>
+            <TableCell>{fallbackVertical}</TableCell>
+            <TableCell>{fallbackProduto}</TableCell>
+            <TableCell>{ fallbackTipo }</TableCell>
             <TableCell>{ fallbackDescricao }</TableCell>
         </TableRow>
       </TableBody>
