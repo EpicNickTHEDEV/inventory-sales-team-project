@@ -19,25 +19,22 @@ const Extension = ({ context, runServerless, sendAlert }) => {
   const fallbackTipo = 'Regular';
   const fallbackDescricao = 'Lorem ipsum dolor conecster amett adhet';
 
-  const [data, setData] = useState([]);
-  // const [loading, setLoading] = useState(true);
+  // const [data, setData] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await runServerless({ parameters: {} });
-        const availabilityItems = JSON.parse(result);
-        setData(availabilityItems);
-        // setLoading(false);
-      } catch (error) {
-        sendAlert("error", "Failed to fetch data from serverless function");
-        console.error("Error fetching data:", error);
-        // setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const result = await runServerless({ parameters: {} });
+  //       const availabilityItems = JSON.parse(result);
+  //       setData(availabilityItems);
+  //     } catch (error) {
+  //       sendAlert("error", "Failed to fetch data from serverless function");
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, [runServerless, sendAlert]);
+  //   fetchData();
+  // }, [runServerless, sendAlert]);
 
   return (
     <>
