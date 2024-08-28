@@ -14,16 +14,11 @@ const Extension = ({ context, runServerless, actions }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // useEffect(() => {
- 
-  // }, []);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Call the fetchAvailabilityItems serverless function
         const result = await runServerless({
-          name: "fetchAvailabilityItems", // Matches the name defined in serverless.json
+          name: "fetchAvailabilityItems",
           parameters: { hs_object_id: context.crmObjectId }
         });
 
