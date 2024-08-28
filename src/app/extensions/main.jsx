@@ -75,6 +75,20 @@ const Extension = ({ context, runServerless, actions }) => {
               <TableCell>{item.quantity || "Regular"}</TableCell>
               <TableCell>{new Date(parseInt(item.startDate)).toLocaleDateString() || "N/A"}</TableCell>
               <TableCell>{new Date(parseInt(item.endDate)).toLocaleDateString() || "N/A"}</TableCell>
+              <TableCell><Button
+   onClick={() => {
+    console.log('Consultar!');
+    }}
+   href={{
+    url: '#',
+    external: true
+    }}
+   variant="primary"
+   size="md"
+   type="button"
+   >
+   Consultar
+  </Button></TableCell>
             </TableRow>
           ))
         ) : (
