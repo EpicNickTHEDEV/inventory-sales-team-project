@@ -1,6 +1,20 @@
 const axios = require("axios");
 
 exports.main = async (context = {}) => {
+  const fallbackData = [
+    {
+      location: { name: "Home" },
+      vertical: { name: "Mercado" },
+      product: { name: "Banner" },
+      quantity: 0,
+      startDate: "N/A",
+      endDate: "N/A",
+      type: "Regular",
+      descricao: "Lorem ipsum dolor conecster amett adhet",
+    },
+    // Add more fallback rows if needed
+  ];
+
   try {
     const response = await axios.post("http://localhost:3000/graphql", {
       query: `
@@ -24,7 +38,6 @@ exports.main = async (context = {}) => {
       `,
     });
 
-    // Return the fetched data
     return {
       statusCode: 200,
       body: JSON.stringify(response.data.data.availabilityItems),
@@ -32,8 +45,8 @@ exports.main = async (context = {}) => {
   } catch (error) {
     console.error("Error fetching data:", error);
     return {
-      statusCode: 500,
-      body: JSON.stringify({ error: "Failed to fetch data from GraphQL API" }),
+      statusCode: 200,
+      body: JSON.stringify(fallbackData),
     };
   }
 };
