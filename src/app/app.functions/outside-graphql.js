@@ -41,10 +41,8 @@ const fetchAvailabilityItems = () => {
     variables: {},
   };
 
-  console.log(`body all: ${JSON.stringify(body)}`);
-
-  // Return the axios post
-  return axios.post(
+  console.log(`initial body all: ${JSON.stringify(body)}`);
+  const dataPost = axios.post(
     "https://ifood-availability-backend-production-ifood.svc-us3.zcloud.ws/graphql",
     JSON.stringify(body),
     {
@@ -53,4 +51,7 @@ const fetchAvailabilityItems = () => {
       },
     }
   );
+  console.log(`final body all: ${JSON.stringify(dataPost)}`);
+
+  return dataPost;
 };
