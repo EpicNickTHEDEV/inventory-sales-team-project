@@ -1,53 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { ApolloClient, InMemoryCache, ApolloProvider, useQuery } from "@apollo/client";
 import { logger, Table, TableHead, TableRow, TableHeader, TableBody, TableCell, hubspot } from "@hubspot/ui-extensions";
+import { AVAILABILITY_ITEMS_QUERY } from "../app.functions/outside-graphql";
 
-// Define the extension to be run within the HubSpot CRM
+const client = new ApolloClient({
+  uri: "https://ifood-availability-backend-production-ifood.svc-us3.zcloud.ws/graphql",
+  cache: new InMemoryCache(),
+});
+
 hubspot.extend(({ context, runServerlessFunction, actions }) => (
-  <Extension
-    context={context}
-    runServerless={runServerlessFunction}
-    sendAlert={actions.addAlert}
-  />
+  <ApolloProvider client={client}>
+    <Extension
+      context={context}
+      runServerless={runServerlessFunction}
+      sendAlert={actions.addAlert}
+    />
+  </ApolloProvider>
 ));
 
+
 const Extension = ({ context, runServerless, sendAlert }) => {
-  const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
-  // logger.info("Initiating extension!");
+  const { loading, error, data } = useQuery(AVAILABILITY_ITEMS_QUERY);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const result = await runServerless({ parameters: {} });
+  if (loading) return <p>Loading...</p>;
+  if (error) {
+    logger.error("Error in fetchData:", error);
+    sendAlert("error", error.message || "An unexpected error occurred");
+    return <p>Error: {error.message}</p>;
+  }
 
-  //       // Debug logging to understand what 'result' contains
-  //       logger.info(`Raw result: ${JSON.stringify(result)}`);
-
-  //       if (result && result.body) {
-  //         const availabilityItems = JSON.parse(result.body);
-
-  //         if (Array.isArray(availabilityItems)) {
-  //           setData(availabilityItems);
-  //         } else {
-  //           logger.error("Expected an array, but did not get one.");
-  //           setData(null);
-  //         }
-  //       } else {
-  //         throw new Error("Result or result.body is undefined.");
-  //       }
-  //     } catch (error) {
-  //       setError("Failed to fetch data from serverless function");
-  //       logger.error("Error in fetchData:", error);
-  //       sendAlert("error", error.message || "An unexpected error occurred");
-  //     } finally {
-  //       // setLoading(false);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [runServerless, sendAlert]);
-
-  // Rendering fallback data if the fetch fails
   const fallbackRow = (
     <TableRow>
       <TableCell>Home</TableCell>
@@ -57,10 +38,6 @@ const Extension = ({ context, runServerless, sendAlert }) => {
       <TableCell>Lorem ipsum dolor conecster amett adhet</TableCell>
     </TableRow>
   );
-
-  if (error) {
-    return <p>Error: {error}</p>; // Display the error message if an error occurs
-  }
 
   return (
     <Table bordered={true} paginated={true} pageCount="5">
@@ -74,8 +51,8 @@ const Extension = ({ context, runServerless, sendAlert }) => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {data && Array.isArray(data) && data.length > 0 ? (
-          data.map((item, index) => (
+        {data && data.availabilityItems.length > 0 ? (
+          data.availabilityItems.map((item, index) => (
             <TableRow key={index}>
               <TableCell>{item.location?.name || "Home"}</TableCell>
               <TableCell>{item.vertical?.name || "Mercado"}</TableCell>
@@ -92,5 +69,3 @@ const Extension = ({ context, runServerless, sendAlert }) => {
     </Table>
   );
 };
-
-export default Extension;
