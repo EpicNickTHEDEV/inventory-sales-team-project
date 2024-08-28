@@ -16,34 +16,34 @@ const Extension = ({ context, runServerless, sendAlert }) => {
   const [error, setError] = useState(null);
   logger.info("Initiating extension!");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await runServerless({ parameters: {} });
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const result = await runServerless({ parameters: {} });
 
-        // Debug logging to understand what 'result' contains
-        logger.info(`Raw result: ${JSON.stringify(result)}`);
+  //       // Debug logging to understand what 'result' contains
+  //       logger.info(`Raw result: ${JSON.stringify(result)}`);
 
-        if (result && result.body) {
-          const availabilityItems = JSON.parse(result.body);
+  //       if (result && result.body) {
+  //         const availabilityItems = JSON.parse(result.body);
 
-          if (Array.isArray(availabilityItems)) {
-            setData(availabilityItems);
-          } else {
-            logger.error("Expected an array, but did not get one.");
-            setData(null);
-          }
-        } else {
-          throw new Error("Result or result.body is undefined.");
-        }
-      } catch (error) {
-        setError("Failed to fetch data from serverless function");
-        logger.error("Error in fetchData:", error);
-        sendAlert("error", error.message || "An unexpected error occurred");
-      } finally {
-        // setLoading(false);
-      }
-    };
+  //         if (Array.isArray(availabilityItems)) {
+  //           setData(availabilityItems);
+  //         } else {
+  //           logger.error("Expected an array, but did not get one.");
+  //           setData(null);
+  //         }
+  //       } else {
+  //         throw new Error("Result or result.body is undefined.");
+  //       }
+  //     } catch (error) {
+  //       setError("Failed to fetch data from serverless function");
+  //       logger.error("Error in fetchData:", error);
+  //       sendAlert("error", error.message || "An unexpected error occurred");
+  //     } finally {
+  //       // setLoading(false);
+  //     }
+  //   };
 
     fetchData();
   }, [runServerless, sendAlert]);
