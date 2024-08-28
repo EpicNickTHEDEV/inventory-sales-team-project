@@ -30,11 +30,10 @@ const client = new ApolloClient({
 });
 
 // Define the extension to be run within the HubSpot CRM
-hubspot.extend(({ context, runServerlessFunction, actions }) => (
+hubspot.extend(({ context, actions }) => (
   <ApolloProvider client={client}>
     <Extension
       context={context}
-      runServerless={runServerlessFunction}
       sendAlert={actions.addAlert}
     />
   </ApolloProvider>
@@ -46,8 +45,7 @@ const Extension = ({ context, runServerless, sendAlert }) => {
   if (loading) return <LoadingSpinner label="Carregando..." />;
   if (error) {
     logger.error("Error in fetchData:", error);
-    sendAlert("error", error.message || "An unexpected error occurred");
-    return <p>Error: {error.message}</p>;
+    return;
   }
 
   const fallbackRow = (
