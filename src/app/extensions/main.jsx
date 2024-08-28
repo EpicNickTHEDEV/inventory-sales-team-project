@@ -15,22 +15,14 @@ const Extension = ({ context, runServerless, sendAlert }) => {
 
   // useEffect following HubSpot's recommended pattern
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await runServerless({ parameters: {} });
-
-        // Assuming the response body is correctly formatted
+    const fetchData = () => {
+        const result = runServerless({ parameters: {} });
         const availabilityItems = JSON.parse(result.body);
-
         setData(availabilityItems);
-      } catch (error) {
-        sendAlert("error", "Failed to fetch data from serverless function");
-        console.error("Error fetching data:", error);
-      }
     };
 
     fetchData();
-  }, [runServerless, sendAlert]);
+  }, [runServerless]);
 
   // Rendering fallback data if the fetch fails
   const fallbackRow = (
