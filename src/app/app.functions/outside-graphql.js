@@ -3,17 +3,18 @@ const axios = require("axios");
 exports.main = async (context = {}) => {
   try {
     // Fetch associated availability items
-    const { data } = await fetchAvailabilityItems();
+    const data = await fetchAvailabilityItems();
 
     // Send the response data
     return data;
   } catch (e) {
     // Handle and return the error
+    console.error("Error fetching availability items:", e);
     return e;
   }
 };
 
-const fetchAvailabilityItems = () => {
+const fetchAvailabilityItems = async () => {
   // Define the GraphQL query as a plain string
   const query = `
     query {
@@ -41,18 +42,28 @@ const fetchAvailabilityItems = () => {
     variables: {},
   };
 
-  console.log(`initial body all: ${JSON.stringify(body)}`);
-  const dataPost = axios.post(
-    "https://ifood-availability-backend-production-ifood.svc-us3.zcloud.ws/graphql",
-    JSON.stringify(body),
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  console.log(`Initial body: ${JSON.stringify(body)}`);
 
-  console.log(`dataPost final body all: ${dataPost} ${dataPost.response}`);
+  try {
+    const response = await axios.post(
+      "https://ifood-availability-backend-production-ifood.svc-us3.zcloud.ws/graphql",
+      JSON.stringify(body),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-  return dataPost;
+    // Log the response data
+    console.log(
+      "DataPost response data:",
+      JSON.stringify(response.data, null, 2)
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error in axios post:", error);
+    throw error; // Re-throw the error so it can be caught by the caller
+  }
 };
