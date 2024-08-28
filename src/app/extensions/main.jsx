@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Button, Text, Flex, Tag, hubspot, LoadingSpinner, Table, TableHead, TableRow, TableHeader, TableBody, TableCell, Heading, Link, Modal, ModalBody } from "@hubspot/ui-extensions";
+import React, { useState, useEffect } from "react";
+import { Table, TableHead, TableRow, TableHeader, TableBody, TableCell, Text, Flex, Input, Divider, LoadingSpinner } from "@hubspot/ui-extensions";
+import axios from 'axios';
 
 // Define the extension to be run within the Hubspot CRM
 hubspot.extend(({ context, runServerlessFunction, actions }) => (
@@ -12,11 +13,48 @@ hubspot.extend(({ context, runServerlessFunction, actions }) => (
 
 // Define the Extension component, taking in runServerless, context, & sendAlert as props
 const Extension = ({ context, runServerless, sendAlert }) => {
-  const [text, setText] = useState("");
-  const fallbackLocal = 'Home';
-  const fallbackVertical = 'Banner';
-  const fallbackProduto = 'Regular';
-  const fallbackDescricao = 'Lorem ipsum dolor conecster amett adhet';
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post('http://localhost:3000/graphql', {
+          query: `
+            query {
+              availabilityItems {
+                _id
+                product {
+                  name
+                }
+                location {
+                  name
+                }
+                vertical {
+                  name
+                }
+                quantity
+                startDate
+                endDate
+              }
+            }
+          `
+        });
+        setData(response.data.data.availabilityItems);
+        setLoading(false);
+      } catch (error) {
+        sendAlert("error", "Failed to fetch data from GraphQL API");
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [sendAlert]);
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <>
@@ -30,29 +68,32 @@ const Extension = ({ context, runServerless, sendAlert }) => {
         <Input name="text" label="Send" onInput={(t) => setText(t)} />
       </Flex>
       <Divider />
-      <Table 
-        bordered={true}
-        paginated={true}
-        pageCount="5"
-      >
-      <TableHead>
-        <TableRow>
+      <Table bordered={true} paginated={true} pageCount="5">
+        <TableHead>
+          <TableRow>
             <TableHeader>LOCAL</TableHeader>
             <TableHeader>VERTICAL</TableHeader>
             <TableHeader>PRODUTO</TableHeader>
-            <TableHeader>TIPO</TableHeader>
-            <TableHeader>DESCRIÇÃO</TableHeader>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        <TableRow>
-            <TableCell>{ fallbackLocal }</TableCell>
-            <TableCell>{ fallbackVertical }</TableCell>
-            <TableCell>{ fallbackProduto }</TableCell>
-            <TableCell>{ fallbackDescricao }</TableCell>
-        </TableRow>
-      </TableBody>
-    </Table>
+            <TableHeader>QUANTIDADE</TableHeader>
+            <TableHeader>INÍCIO</TableHeader>
+            <TableHeader>FIM</TableHeader>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data.map((item, index) => (
+            <TableRow key={index}>
+              <TableCell>{item.location.name}</TableCell>
+              <TableCell>{item.vertical.name}</TableCell>
+              <TableCell>{item.product.name}</TableCell>
+              <TableCell>{item.quantity}</TableCell>
+              <TableCell>{item.startDate}</TableCell>
+              <TableCell>{item.endDate}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </>
   );
 };
+
+export default Extension;
