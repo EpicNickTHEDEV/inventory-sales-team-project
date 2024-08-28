@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, TableHead, TableRow, TableHeader, TableBody, TableCell, LoadingSpinner, hubspot } from "@hubspot/ui-extensions";
+import { Table, TableHead, TableRow, TableHeader, TableBody, TableCell, hubspot } from "@hubspot/ui-extensions";
 
 // Define the extension to be run within the HubSpot CRM
 hubspot.extend(({ context, runServerlessFunction, actions }) => (
@@ -42,11 +42,6 @@ const Extension = ({ context, runServerless, sendAlert }) => {
       <TableCell>Lorem ipsum dolor conecster amett adhet</TableCell>
     </TableRow>
   );
-
-  // Loading spinner while data is being fetched
-  if (loading) {
-    return <LoadingSpinner label="Loading data..." />;
-  }
 
   return (
     <Table bordered={true} paginated={true} pageCount="5">
