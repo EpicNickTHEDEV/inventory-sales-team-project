@@ -52,9 +52,7 @@ const fetchAvailabilityItems = () => {
     }
   );
 
-  if (dataPost.status === "SUCCESS" && dataPost.response) {
-    console.log(`dataPost final body all: ${dataPost.response}`);
-  }
+  console.log(`dataPost final body all: ${dataPost} ${dataPost.response}`);
 
   return dataPost;
 };
