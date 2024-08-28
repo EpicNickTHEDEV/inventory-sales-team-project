@@ -1,27 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { logger, Button, Text, Flex, Tag, Heading, Link, LoadingSpinner, Table, TableHead, TableRow, TableHeader, TableBody, TableCell, hubspot } from "@hubspot/ui-extensions";
 
-import axios from "axios";
-
-const AVAILABILITY_ITEMS_QUERY = `
-  query {
-    availabilityItems {
-      _id
-      product {
-        name
-      }
-      location {
-        name
-      }
-      vertical {
-        name
-      }
-      quantity
-      startDate
-      endDate
-    }
-  }
-`;
 
 hubspot.extend(({ context, runServerlessFunction, actions }) => 
   <Extension 
@@ -35,26 +14,23 @@ const Extension = ({ context, runServerless, actions }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // useEffect(() => {
+ 
+  // }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post(
-          "https://ifood-availability-backend-production-ifood.svc-us3.zcloud.ws/graphql",
-          JSON.stringify({
-            query: AVAILABILITY_ITEMS_QUERY,
-            variables: {},
-          }),
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        // Call the fetchAvailabilityItems serverless function
+        const result = await runServerless({
+          name: "fetchAvailabilityItems", // Matches the name defined in serverless.json
+          parameters: { hs_object_id: context.crmObjectId }
+        });
 
-        if (response.data && response.data.data) {
-          setData(response.data.data);
+        if (result.status === "SUCCESS") {
+          setData(result.response);
         } else {
-          throw new Error("No data returned from API");
+          throw new Error("Failed to fetch data from serverless function");
         }
       } catch (e) {
         logger.error("Error in fetchData:", e);
@@ -65,7 +41,8 @@ const Extension = ({ context, runServerless, actions }) => {
     };
 
     fetchData();
-  }, []);
+  }, [runServerless, context.crmObjectId]);
+
 
   if (loading) return <LoadingSpinner label="Carregando..." />;
   if (error) {
