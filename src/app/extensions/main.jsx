@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Text, Flex, Tag, hubspot, LoadingSpinner, TableBody, TableCell, TableHead, TableRow, TableHeader, Table, Heading, Link, Modal, ModalBody } from "@hubspot/ui-extensions";
+import { Button, Text, Flex, Tag, hubspot, LoadingSpinner, Table, TableHead, TableRow, TableHeader, TableBody, TableCell, Heading, Link, Modal, ModalBody } from "@hubspot/ui-extensions";
 
 // Define the extension to be run within the Hubspot CRM
 hubspot.extend(({ context, runServerlessFunction, actions }) => (
@@ -13,13 +13,10 @@ hubspot.extend(({ context, runServerlessFunction, actions }) => (
 // Define the Extension component, taking in runServerless, context, & sendAlert as props
 const Extension = ({ context, runServerless, sendAlert }) => {
   const [text, setText] = useState("");
-
-  // Call serverless function to execute with parameters.
-  // The `myFunc` function name is configured inside `serverless.json`
-  const handleClick = async () => {
-    const { response } = await runServerless({ name: "myFunc", parameters: { text: text } });
-    sendAlert({ message: response });
-  };
+  const fallbackLocal = 'Home';
+  const fallbackVertical = 'Banner';
+  const fallbackProduto = 'Regular';
+  const fallbackDescricao = 'Lorem ipsum dolor conecster amett adhet';
 
   return (
     <>
@@ -31,9 +28,6 @@ const Extension = ({ context, runServerless, sendAlert }) => {
       </Text>
       <Flex direction="row" align="end" gap="small">
         <Input name="text" label="Send" onInput={(t) => setText(t)} />
-        <Button type="submit" onClick={handleClick}>
-          Debug me
-        </Button>
       </Flex>
       <Divider />
       <Table 
@@ -52,10 +46,10 @@ const Extension = ({ context, runServerless, sendAlert }) => {
       </TableHead>
       <TableBody>
         <TableRow>
-            <TableCell>{ 'Home' }</TableCell>
-            <TableCell>{'Banner'}</TableCell>
-            <TableCell>{'Regular'}</TableCell>
-            <TableCell>{ 'Lorem ipsum dolor conecster amett adhet' }</TableCell>
+            <TableCell>{ fallbackLocal }</TableCell>
+            <TableCell>{ fallbackVertical }</TableCell>
+            <TableCell>{ fallbackProduto }</TableCell>
+            <TableCell>{ fallbackDescricao }</TableCell>
         </TableRow>
       </TableBody>
     </Table>
