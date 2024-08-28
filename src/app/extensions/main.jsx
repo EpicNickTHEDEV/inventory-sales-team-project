@@ -1,13 +1,35 @@
 import React from "react";
-import { ApolloClient, InMemoryCache, ApolloProvider, useQuery } from "@apollo/client";
+import { ApolloClient, InMemoryCache, ApolloProvider, useQuery, gql } from "@apollo/client";
 import { logger, LoadingSpinner, Table, TableHead, TableRow, TableHeader, TableBody, TableCell, hubspot } from "@hubspot/ui-extensions";
-import { AVAILABILITY_ITEMS_QUERY } from "../app.functions/outside-graphql";
 
+// Define the GraphQL query directly in the JSX file
+const AVAILABILITY_ITEMS_QUERY = gql`
+  query {
+    availabilityItems {
+      _id
+      product {
+        name
+      }
+      location {
+        name
+      }
+      vertical {
+        name
+      }
+      quantity
+      startDate
+      endDate
+    }
+  }
+`;
+
+// Set up the Apollo Client
 const client = new ApolloClient({ 
   uri: "https://ifood-availability-backend-production-ifood.svc-us3.zcloud.ws/graphql",
   cache: new InMemoryCache(),
 });
 
+// Define the extension to be run within the HubSpot CRM
 hubspot.extend(({ context, runServerlessFunction, actions }) => (
   <ApolloProvider client={client}>
     <Extension
@@ -18,14 +40,13 @@ hubspot.extend(({ context, runServerlessFunction, actions }) => (
   </ApolloProvider>
 ));
 
-
 const Extension = ({ context, runServerless, sendAlert }) => {
   const { loading, error, data } = useQuery(AVAILABILITY_ITEMS_QUERY);
 
   if (loading) return <LoadingSpinner label="Carregando..." />;
   if (error) {
     logger.error("Error in fetchData:", error);
-    logger.error("error", error.message || "An unexpected error occurred");
+    sendAlert("error", error.message || "An unexpected error occurred");
     return <p>Error: {error.message}</p>;
   }
 

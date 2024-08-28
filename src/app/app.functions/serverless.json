@@ -1,7 +1,7 @@
 {
   "appFunctions": {
-    "AVAILABILITY_ITEMS_QUERY": {
-      "file": "outside-graphql.js",
+    "response": {
+      "file": "example-function.js",
       "secrets": []
     }
   }
