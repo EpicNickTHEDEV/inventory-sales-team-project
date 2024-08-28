@@ -1,7 +1,7 @@
 {
   "appFunctions": {
     "response": {
-      "file": "example-function.js",
+      "file": "outside-graphql.js",
       "secrets": []
     }
   }

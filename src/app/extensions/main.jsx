@@ -12,7 +12,6 @@ hubspot.extend(({ context, runServerlessFunction, actions }) => (
 
 const Extension = ({ context, runServerless, sendAlert }) => {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   // useEffect following HubSpot's recommended pattern
   useEffect(() => {
@@ -24,11 +23,9 @@ const Extension = ({ context, runServerless, sendAlert }) => {
         const availabilityItems = JSON.parse(result.body);
 
         setData(availabilityItems);
-        setLoading(false);
       } catch (error) {
         sendAlert("error", "Failed to fetch data from serverless function");
         console.error("Error fetching data:", error);
-        setLoading(false);
       }
     };
 
