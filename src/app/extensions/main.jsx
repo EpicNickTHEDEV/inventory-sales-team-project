@@ -63,6 +63,7 @@ const Extension = ({ context, runServerless, actions }) => {
           <TableHeader>PRODUTO</TableHeader>
           <TableHeader>TIPO</TableHeader>
           <TableHeader>DESCRIÇÃO</TableHeader>
+          <TableHeader>AÇÃO</TableHeader>
         </TableRow>
       </TableHead>
       <TableBody>
