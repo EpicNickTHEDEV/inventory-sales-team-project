@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  Divider,
-  Link,
-  Button,
-  Text,
-  Input,
-  Flex,
-  hubspot,
-} from "@hubspot/ui-extensions";
+import { Button, Text, Flex, Tag, hubspot, LoadingSpinner, TableBody, TableCell, TableHead, TableRow, TableHeader, Table, Heading, Link, Modal, ModalBody } from "@hubspot/ui-extensions";
 
 // Define the extension to be run within the Hubspot CRM
 hubspot.extend(({ context, runServerlessFunction, actions }) => (
@@ -44,29 +36,29 @@ const Extension = ({ context, runServerless, sendAlert }) => {
         </Button>
       </Flex>
       <Divider />
-      <Text>
-        What now? Explore all available{" "}
-        <Link href="https://developers.hubspot.com/docs/platform/ui-extension-components">
-          UI components
-        </Link>
-        , get an overview of{" "}
-        <Link href="https://developers.hubspot.com/docs/platform/ui-extensions-overview">
-          UI extensions
-        </Link>
-        , learn how to{" "}
-        <Link href="https://developers.hubspot.com/docs/platform/create-ui-extensions">
-          add a new custom card
-        </Link>
-        , jump right in with our{" "}
-        <Link href="https://developers.hubspot.com/docs/platform/ui-extensions-quickstart">
-          Quickstart Guide
-        </Link>
-        , or check out our{" "}
-        <Link href="https://github.com/HubSpot/ui-extensions-react-examples">
-          code Samples
-        </Link>
-        .
-      </Text>
+      <Table 
+        bordered={true}
+        paginated={true}
+        pageCount="5"
+      >
+      <TableHead>
+        <TableRow>
+            <TableHeader>LOCAL</TableHeader>
+            <TableHeader>VERTICAL</TableHeader>
+            <TableHeader>PRODUTO</TableHeader>
+            <TableHeader>TIPO</TableHeader>
+            <TableHeader>DESCRIÇÃO</TableHeader>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        <TableRow>
+            <TableCell>{ 'Home' }</TableCell>
+            <TableCell>{'Banner'}</TableCell>
+            <TableCell>{'Regular'}</TableCell>
+            <TableCell>{ 'Lorem ipsum dolor conecster amett adhet' }</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
     </>
   );
 };
