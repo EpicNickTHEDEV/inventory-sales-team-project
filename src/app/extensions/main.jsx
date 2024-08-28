@@ -3,7 +3,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider, useQuery } from "@apollo/c
 import { logger, Table, TableHead, TableRow, TableHeader, TableBody, TableCell, hubspot } from "@hubspot/ui-extensions";
 import { AVAILABILITY_ITEMS_QUERY } from "../app.functions/outside-graphql";
 
-const client = new ApolloClient({
+const client = new ApolloClient({ 
   uri: "https://ifood-availability-backend-production-ifood.svc-us3.zcloud.ws/graphql",
   cache: new InMemoryCache(),
 });
