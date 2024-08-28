@@ -1,61 +1,12 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios"; // Import axios directly
+import React from "react";
+import { useQuery } from "@apollo/client";
+import { AVAILABILITY_ITEMS_QUERY } from "../app.functions/local-graphql";
 
 const LocalTest = () => {
-  const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { loading, error, data } = useQuery(AVAILABILITY_ITEMS_QUERY);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.post("https://ifood-availability-backend-production-ifood.svc-us3.zcloud.ws/graphql", {
-          query: `
-            query {
-              availabilityItems {
-                _id
-                product {
-                  name
-                }
-                location {
-                  name
-                }
-                vertical {
-                  name
-                }
-                quantity
-                startDate
-                endDate
-              }
-            }
-          `,
-        });
-
-        const availabilityItems = response.data.data.availabilityItems;
-
-        if (Array.isArray(availabilityItems)) {
-          setData(availabilityItems);
-        } else {
-          throw new Error("Expected an array but did not get one.");
-        }
-      } catch (error) {
-        setError(error.message || "An unexpected error occurred");
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
   const fallbackRow = (
     <tr>
@@ -79,8 +30,8 @@ const LocalTest = () => {
         </tr>
       </thead>
       <tbody>
-        {data && data.length > 0 ? (
-          data.map((item, index) => (
+        {data && data.availabilityItems.length > 0 ? (
+          data.availabilityItems.map((item, index) => (
             <tr key={index}>
               <td>{item.location?.name || "Home"}</td>
               <td>{item.vertical?.name || "Mercado"}</td>
