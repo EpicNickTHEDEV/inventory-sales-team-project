@@ -19,22 +19,22 @@ const Extension = ({ context, runServerless, sendAlert }) => {
   const fallbackTipo = 'Regular';
   const fallbackDescricao = 'Lorem ipsum dolor conecster amett adhet';
 
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await runServerless({ parameters: {} });
-        const availabilityItems = JSON.parse(result);
-        setData(availabilityItems);
-      } catch (error) {
-        sendAlert("error", "Failed to fetch data from serverless function");
-        console.error("Error fetching data:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const result = await runServerless({ parameters: {} });
+  //       const availabilityItems = JSON.parse(result);
+  //       setData(availabilityItems);
+  //     } catch (error) {
+  //       sendAlert("error", "Failed to fetch data from serverless function");
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, [runServerless, sendAlert]);
+  //   fetchData();
+  // }, [runServerless, sendAlert]);
 
   return (
     <>
@@ -56,16 +56,6 @@ const Extension = ({ context, runServerless, sendAlert }) => {
             <TableCell>{ fallbackTipo }</TableCell>
             <TableCell>{ fallbackDescricao }</TableCell>
           </TableRow>
-          {data.map((item, index) => (
-            <TableRow key={index}>
-              <TableCell>{item.location.name}</TableCell>
-              <TableCell>{item.vertical.name}</TableCell>
-              <TableCell>{item.product.name}</TableCell>
-              <TableCell>{item.quantity}</TableCell>
-              <TableCell>{item.startDate}</TableCell>
-              <TableCell>{item.endDate}</TableCell>
-            </TableRow>
-          ))}
       </TableBody>
     </Table>
     </>
