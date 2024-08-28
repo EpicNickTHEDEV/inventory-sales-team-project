@@ -24,7 +24,7 @@ const Extension = ({ context, runServerless, sendAlert }) => {
         <Text format={{ fontWeight: "bold" }}>
           This is the inventory engine front-end made by Epic Digital.
         </Text>
-        Hi, {context.user.firstName}, this is under development and will be available soon to the iFood Sales Team, please wait a little longer :)
+        Hi, {context.user.firstName}, this is under development and will be available soon to the iFood Sales Team, please wait a little longer
       </Text>
       <Flex direction="row" align="end" gap="small">
         <Input name="text" label="Send" onInput={(t) => setText(t)} />
