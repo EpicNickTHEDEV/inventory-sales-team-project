@@ -21,7 +21,6 @@ const Extension = ({ context, runServerless, sendAlert }) => {
 
   return (
     <>
-      <Divider />
       <Table 
         bordered={true}
         paginated={true}
