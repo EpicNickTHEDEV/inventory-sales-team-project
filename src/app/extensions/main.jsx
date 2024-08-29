@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { logger, Button, Text, Flex, Tag, Heading, Link, LoadingSpinner, Table, TableHead, TableRow, TableHeader, TableBody, TableCell, hubspot } from "@hubspot/ui-extensions";
+import { logger, Button, Text, Modal, ModalBody, Flex, Tag, Heading, Link, LoadingSpinner, Table, TableHead, TableRow, TableHeader, TableBody, TableCell, hubspot } from "@hubspot/ui-extensions";
 
 hubspot.extend(({ context, runServerlessFunction, actions }) => 
   <Extension 
@@ -85,7 +85,19 @@ const Extension = ({ context, runServerless, actions }) => {
     }}
    variant="primary"
    size="sm"
-   type="button"
+                type="button"
+                overlay={
+                  <Modal 
+                  id="reserve-modal" 
+                  title="Reserva"
+                  width="md"
+                  >
+                    <ModalBody>
+                      <Text>Area do calendario</Text>
+                      <Text>Ainda em desenvolvimento...</Text>
+                    </ModalBody>
+                  </Modal>
+                }
    >
    Consultar
   </Button></TableCell>
