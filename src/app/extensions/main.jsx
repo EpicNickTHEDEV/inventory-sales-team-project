@@ -88,8 +88,8 @@ const Extension = ({ context, runServerless, actions }) => {
                 type="button"
                 overlay={
                   <Modal 
-                  id="reserve-modal" 
-                  title="Reserva"
+                  id="consultar-modal" 
+                  title="Consultar Disponibilidade"
                   width="md"
                   >
                     <ModalBody>
