@@ -1,14 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { logger, Button, Text, Modal, ModalBody, Flex, Tag, Heading, Link, LoadingSpinner, Table, TableHead, TableRow, TableHeader, TableBody, TableCell, hubspot } from "@hubspot/ui-extensions";
 
+// TODO:
+// 1 -> Open iFrame inside modal (https://developers.hubspot.com/docs/platform/ui-extensions-sdk#open-an-iframe-in-a-modal)
+// 2 -> Add calendar to the modal
+// 3 -> Add editing panel
+// 4 -> Improve GraphQL handling and mutations...
+
 hubspot.extend(({ context, runServerlessFunction, actions }) => 
   <Extension 
     context={context} 
     runServerless={runServerlessFunction}
+    openIframe={actions.openIframeModal}
   />
 );
 
-const Extension = ({ context, runServerless, actions }) => {
+const Extension = ({ context, runServerless, actions, openIframe }) => {
+
+  const handleIFRAME = () => {
+    openIframe({
+      uri: "https://wikipedia.org/", // this is a relative link. Some links will be blocked since they don't allow iframing
+      height: 1000,
+      width: 1000,
+      title: 'Wikipedia in an iframe',
+      flush: true
+    }, () => console.log('This message will display upon closing the modal.'));
+  };
+
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -95,6 +113,7 @@ const Extension = ({ context, runServerless, actions }) => {
                     <ModalBody>
                       <Text>Area do calendario</Text>
                       <Text>Ainda em desenvolvimento...</Text>
+                      <Button type="submit" onClick={handleIFRAME}>iFrame Caller</Button>
                     </ModalBody>
                   </Modal>
                 }
