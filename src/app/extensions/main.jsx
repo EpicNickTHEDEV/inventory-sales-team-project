@@ -19,12 +19,12 @@ const Extension = ({ context, runServerless, actions, openIframe }) => {
 
   const handleIFRAME = () => {
     openIframe({
-      uri: "https://wikipedia.org/", // this is a relative link. Some links will be blocked since they don't allow iframing
-      height: 1000,
-      width: 1000,
-      title: 'Wikipedia in an iframe',
+      uri: "https://nzo8gje8hiijq-ifood.svc-us3.zcloud.ws/",
+      height: 1030,
+      width: 1200,
+      title: 'Escolha sua reserva',
       flush: true
-    }, () => console.log('This message will display upon closing the modal.'));
+    }, () => console.log('iFrame called... Loading from modal!'));
   };
 
   const [data, setData] = useState(null);
@@ -111,9 +111,10 @@ const Extension = ({ context, runServerless, actions, openIframe }) => {
                   width="md"
                   >
                     <ModalBody>
-                      <Text>Area do calendario</Text>
-                      <Text>Ainda em desenvolvimento...</Text>
-                      <Button type="submit" onClick={handleIFRAME}>iFrame Caller</Button>
+                      <Text>Consultar Disponibilidade</Text>
+                      <Text>Carregando disponibilidades...</Text>
+                      <Text>Faça a reserva abaixo:</Text>
+                      <Button type="submit" onClick={handleIFRAME}>Fazer Reserva</Button>
                     </ModalBody>
                   </Modal>
                 }
