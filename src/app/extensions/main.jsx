@@ -73,7 +73,7 @@ const Extension = ({ context, runServerless, actions, openIframe }) => {
   );
 
   return (
-    <Table bordered={true} paginated={false} pageCount="1">
+    <Table bordered={true} paginated={false} pageCount="1" searchable={true}>
       <TableHead>
         <TableRow>
           <TableHeader width={'min'}>LOCAL</TableHeader>
